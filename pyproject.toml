@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "project-1"
+version = "0.1.0"
+description = ""
+authors = ["alexander anciferov <sania.antsiferoff@yandex.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "4.2.2"
+psycopg2-binary = "^2.9.10"
+django-countries = "^7.6.1"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
+pillow = "^11.0.0"
+pytz = "^2024.2"
+python-dotenv = "^1.0.1"
+django-crontab = "^0.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

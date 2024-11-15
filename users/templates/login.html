@@ -1,0 +1,22 @@
+{% extends 'header.html' %}
+{% block content %}
+<div class="container">
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p}}
+                </div>
+                <div class="col-6">
+                    <a class="mt-4 mb-2 w-100"
+                       href="{% url 'users:reset_password' %}">Сбросить пароль</a>
+                </div>
+                <button type="submit" class="btn btn-success">
+                    Войти
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
