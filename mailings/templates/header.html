@@ -199,7 +199,6 @@
             <p class="text-secondary"><small>Вы вошли как: </small><span
                     class="badge text-bg-secondary">{{ user }}</span></p>
             {% endif %}
-
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none"
                    href="{% url 'mailings:base' %}">Главная</a>
@@ -208,11 +207,12 @@
                 {% if user.is_authenticated %}
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:logout' %}"
                    class="text-white">Выход</a>
-                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:profile' %}"
+                <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:profile' user.pk %}"
                    class="text-white">Изменить профиль</a>
-                {% elif perms.users.can_view_list_of_users %}
+                {% if perms.users.can_view_list_of_users and not user.is_superuser %}
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:user_list' %}"
                    class="text-white">Все пользователи</a>
+                {% endif %}
                 {% else %}
                 <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="{% url 'users:login' %}"
                    class="text-white">Вход</a>

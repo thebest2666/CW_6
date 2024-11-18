@@ -150,11 +150,12 @@ class MailingsUpdateView(LoginRequiredMixin, UpdateView):
             return MailingModeratorForm
 
 
-class MailingsListView(ListView):
+class MailingsListView(LoginRequiredMixin, ListView):
     """
     Отображение списка рассылок
     """
     model = Mailings
+    login_url = reverse_lazy('users:login')
 
 
 class MailingsDetailView(DetailView):

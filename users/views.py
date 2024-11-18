@@ -2,6 +2,8 @@ import secrets
 import string
 import random
 
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
@@ -76,12 +78,13 @@ def reset_password(request):
     return render(request, 'users/reset_password.html')
 
 
-class UserListView(UserModeratorForm, ListView):
+class UserListView(UserModeratorForm, PermissionRequiredMixin, ListView):
     """
     Отображение всех пользователей
     """
     model = User
-    permission_required = 'user.can_view_list_of_users'
+    template_name = 'user_list.html'
+    permission_required = 'users.can_view_list_of_users'
 
 
 
@@ -94,4 +97,13 @@ class ProfileUpdateView(UpdateView):
     success_url = reverse_lazy('users:login')
 
     def get_object(self, queryset=None):
-        return self.request.user
+        return User.objects.get(pk=self.kwargs['pk'])
+
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.pk == self.object.pk:
+            return UserProfileChangeForm
+        if user.has_perm('users.block_users'):
+            return UserModeratorForm
+        raise PermissionDenied

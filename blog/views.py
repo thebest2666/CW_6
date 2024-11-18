@@ -21,9 +21,10 @@ class BlogUpdateView(UpdateView):
         return reverse('blog:view', args=[self.kwargs.get('pk')])
 
 
-class BlogListView(ListView):
+class BlogListView(LoginRequiredMixin, ListView):
     model = Blog
     form_class = BlogForm
+    login_url = reverse_lazy('users:login')
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
