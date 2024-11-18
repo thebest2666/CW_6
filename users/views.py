@@ -94,7 +94,7 @@ class ProfileUpdateView(UpdateView):
     """
     model = User
     form_class = UserProfileChangeForm
-    success_url = reverse_lazy('users:login')
+    success_url = reverse_lazy('mailings:base')
 
     def get_object(self, queryset=None):
         return User.objects.get(pk=self.kwargs['pk'])

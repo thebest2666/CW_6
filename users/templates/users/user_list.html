@@ -10,11 +10,14 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <p class="card-text">Пользователь: {{ item.email }}</p>
-                        <p class="card-text">Статус: {{ item.is_active }}</p>
-                        <p>{{ item.pk }}</p>
                         {% if perms.users.block_users %}
-                        <a class="btn btn-primary" href="{% url 'users:profile' item.pk %}"
-                           role="button">Забанить</a>
+                            {% if item.is_active == True %}
+                            <a class="btn btn-primary" href="{% url 'users:profile' item.pk %}"
+                                role="button">Забанить</a>
+                            {% else %}
+                            <a class="btn btn-primary" href="{% url 'users:profile' item.pk %}"
+                                role="button">Разбанить</a>
+                            {% endif %}
                         {% endif %}
                         <div class="d-flex justify-content-between align-items-center">
                         </div>
